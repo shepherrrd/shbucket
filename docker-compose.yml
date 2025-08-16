@@ -1,0 +1,100 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: shbucket-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-shbucket}
+      POSTGRES_USER: ${POSTGRES_USER:-shbucket}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-shbucket_password}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    networks:
+      - shbucket-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-shbucket} -d ${POSTGRES_DB:-shbucket}"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # SHBucket Master Server
+  shbucket-master:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: shbucket-master
+    restart: unless-stopped
+    ports:
+      - "${SHBUCKET_PORT:-8080}:8080"
+    environment:
+      # Database Configuration
+      - DATABASE_URL=postgres://${POSTGRES_USER:-shbucket}:${POSTGRES_PASSWORD:-shbucket_password}@postgres:5432/${POSTGRES_DB:-shbucket}?sslmode=disable
+      
+      # Server Configuration
+      - PORT=${SHBUCKET_PORT:-8080}
+      - HOST=${SHBUCKET_HOST:-0.0.0.0}
+      - MODE=${SHBUCKET_MODE:-master}
+      
+      # Security
+      - JWT_SECRET=${JWT_SECRET:-your-super-secret-jwt-key-change-this-in-production}
+      - SIGNATURE_SECRET=${SIGNATURE_SECRET:-your-signature-secret-change-this}
+      
+      # Admin User (Only for first setup)
+      - ADMIN_EMAIL=${ADMIN_EMAIL:-admin@shbucket.local}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin123}
+      
+      # Storage Configuration
+      - STORAGE_PATH=/app/storage
+      - MAX_STORAGE_SIZE=${MAX_STORAGE_SIZE:-10737418240}
+      
+      # Optional Features
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+      - ENABLE_CORS=${ENABLE_CORS:-true}
+      - BASE_URL=${BASE_URL:-http://localhost:8080}
+    volumes:
+      - storage_data:/app/storage
+      - ./storage:/app/local-storage
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - shbucket-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/api/v1/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # SHBucket Web Interface
+  shbucket-web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    container_name: shbucket-web
+    restart: unless-stopped
+    ports:
+      - "${WEB_PORT:-3000}:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=${BASE_URL:-http://localhost:8080}/api/v1
+    depends_on:
+      - shbucket-master
+    networks:
+      - shbucket-network
+    profiles:
+      - web
+
+volumes:
+  postgres_data:
+    driver: local
+  storage_data:
+    driver: local
+
+networks:
+  shbucket-network:
+    driver: bridge

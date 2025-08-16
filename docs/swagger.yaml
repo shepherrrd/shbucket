@@ -1,0 +1,1942 @@
+basePath: /api/v1
+definitions:
+  apikey.CreateAPIKeyResponse:
+    properties:
+      api_key:
+        $ref: '#/definitions/models.APIKeyResponse'
+      message:
+        type: string
+      plain_key:
+        description: Only returned on creation
+        type: string
+      success:
+        type: boolean
+    type: object
+  apikey.DeleteAPIKeyResponse:
+    properties:
+      message:
+        type: string
+      success:
+        type: boolean
+    type: object
+  apikey.ListAPIKeysResponse:
+    properties:
+      api_keys:
+        items:
+          $ref: '#/definitions/models.APIKeyResponse'
+        type: array
+      message:
+        type: string
+      success:
+        type: boolean
+      total:
+        type: integer
+    type: object
+  bucket.CreateBucketCommand:
+    properties:
+      auth_rule:
+        $ref: '#/definitions/models.AuthRuleResponse'
+      description:
+        maxLength: 500
+        type: string
+      name:
+        maxLength: 63
+        minLength: 3
+        type: string
+      owner_id:
+        type: string
+      settings:
+        $ref: '#/definitions/models.BucketSettingsResponse'
+    required:
+    - name
+    type: object
+  bucket.CreateBucketResponse:
+    properties:
+      bucket:
+        $ref: '#/definitions/models.BucketResponse'
+      message:
+        type: string
+      success:
+        type: boolean
+    type: object
+  bucket.DeleteBucketResponse:
+    properties:
+      message:
+        type: string
+      success:
+        type: boolean
+    type: object
+  bucket.GetBucketResponse:
+    properties:
+      bucket:
+        $ref: '#/definitions/models.BucketResponse'
+      message:
+        type: string
+      success:
+        type: boolean
+    type: object
+  bucket.ListBucketsResponse:
+    properties:
+      buckets:
+        items:
+          $ref: '#/definitions/models.BucketResponse'
+        type: array
+      limit:
+        type: integer
+      message:
+        type: string
+      page:
+        type: integer
+      success:
+        type: boolean
+      total:
+        type: integer
+    type: object
+  bucket.UpdateBucketCommand:
+    properties:
+      auth_rule:
+        $ref: '#/definitions/models.AuthRuleResponse'
+      bucket_id:
+        type: string
+      description:
+        maxLength: 500
+        type: string
+      settings:
+        $ref: '#/definitions/models.BucketSettingsResponse'
+      user_id:
+        type: string
+    type: object
+  bucket.UpdateBucketResponse:
+    properties:
+      bucket:
+        $ref: '#/definitions/models.BucketResponse'
+      message:
+        type: string
+      success:
+        type: boolean
+    type: object
+  entities.APIKeyPermission:
+    properties:
+      buckets:
+        items:
+          type: string
+        type: array
+      read:
+        type: boolean
+      sign_urls:
+        type: boolean
+      write:
+        type: boolean
+    type: object
+  file.DeleteFileResponse:
+    properties:
+      message:
+        type: string
+      success:
+        type: boolean
+    type: object
+  file.DistributedUploadResponse:
+    properties:
+      file:
+        $ref: '#/definitions/models.FileResponse'
+      message:
+        type: string
+      storage_node:
+        $ref: '#/definitions/models.StorageNodeResponse'
+      success:
+        type: boolean
+    type: object
+  file.GenerateSignedURLResponse:
+    properties:
+      expires_at:
+        type: string
+      message:
+        type: string
+      success:
+        type: boolean
+      url:
+        type: string
+    type: object
+  file.GetFileResponse:
+    properties:
+      file:
+        $ref: '#/definitions/models.FileResponse'
+      message:
+        type: string
+      success:
+        type: boolean
+    type: object
+  file.ListFilesResponse:
+    properties:
+      files:
+        items:
+          $ref: '#/definitions/models.FileResponse'
+        type: array
+      limit:
+        type: integer
+      message:
+        type: string
+      page:
+        type: integer
+      success:
+        type: boolean
+      total:
+        type: integer
+    type: object
+  models.APIKeyResponse:
+    properties:
+      created_at:
+        type: string
+      expires_at:
+        type: string
+      id:
+        type: string
+      is_active:
+        type: boolean
+      key_prefix:
+        type: string
+      last_used:
+        type: string
+      name:
+        type: string
+      permissions:
+        $ref: '#/definitions/entities.APIKeyPermission'
+      updated_at:
+        type: string
+      user_id:
+        type: string
+      username:
+        type: string
+    type: object
+  models.AuthRuleResponse:
+    properties:
+      config:
+        additionalProperties: true
+        type: object
+      enabled:
+        type: boolean
+      type:
+        type: string
+    type: object
+  models.BucketResponse:
+    properties:
+      auth_rule:
+        $ref: '#/definitions/models.AuthRuleResponse'
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      owner_id:
+        type: string
+      settings:
+        $ref: '#/definitions/models.BucketSettingsResponse'
+      stats:
+        $ref: '#/definitions/models.BucketStatsResponse'
+      updated_at:
+        type: string
+    type: object
+  models.BucketSettingsResponse:
+    properties:
+      allow_overwrite:
+        type: boolean
+      allowed_extensions:
+        items:
+          type: string
+        type: array
+      allowed_mime_types:
+        items:
+          type: string
+        type: array
+      blocked_extensions:
+        items:
+          type: string
+        type: array
+      blocked_mime_types:
+        items:
+          type: string
+        type: array
+      encryption:
+        type: boolean
+      max_file_size:
+        type: integer
+      max_files_per_bucket:
+        type: integer
+      max_total_size:
+        type: integer
+      public_read:
+        type: boolean
+      require_content_type:
+        type: boolean
+      versioning:
+        type: boolean
+    type: object
+  models.BucketStatsResponse:
+    properties:
+      last_access:
+        type: string
+      total_files:
+        type: integer
+      total_size:
+        type: integer
+    type: object
+  models.FileMetadataResponse:
+    properties:
+      cache_control:
+        type: string
+      content_disposition:
+        type: string
+      content_encoding:
+        type: string
+      content_type:
+        type: string
+      custom_metadata:
+        additionalProperties: true
+        type: object
+    type: object
+  models.FileResponse:
+    properties:
+      accessed_at:
+        type: string
+      auth_rule:
+        $ref: '#/definitions/models.AuthRuleResponse'
+      bucket_id:
+        type: string
+      checksum:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: string
+      metadata:
+        $ref: '#/definitions/models.FileMetadataResponse'
+      mime_type:
+        type: string
+      name:
+        type: string
+      original_name:
+        type: string
+      path:
+        type: string
+      size:
+        type: integer
+      updated_at:
+        type: string
+      version:
+        type: integer
+    type: object
+  models.MasterSetupRequest:
+    properties:
+      admin_email:
+        type: string
+      admin_password:
+        minLength: 6
+        type: string
+      admin_username:
+        maxLength: 50
+        minLength: 3
+        type: string
+      default_auth_rule:
+        $ref: '#/definitions/models.AuthRuleResponse'
+      default_settings:
+        $ref: '#/definitions/models.BucketSettingsResponse'
+      jwt_secret:
+        type: string
+      max_storage:
+        minimum: 1
+        type: integer
+      storage_path:
+        type: string
+      system_name:
+        maxLength: 100
+        minLength: 3
+        type: string
+    required:
+    - admin_email
+    - admin_password
+    - admin_username
+    - storage_path
+    - system_name
+    type: object
+  models.NodeHealthCheckResponse:
+    properties:
+      error:
+        type: string
+      is_healthy:
+        type: boolean
+      message:
+        type: string
+      node_id:
+        type: string
+      response_time_ms:
+        type: integer
+      success:
+        type: boolean
+    type: object
+  models.NodeInstallationRequest:
+    properties:
+      api_key:
+        type: string
+      max_storage:
+        minimum: 1
+        type: integer
+      name:
+        maxLength: 100
+        minLength: 3
+        type: string
+      port:
+        maximum: 65535
+        minimum: 1
+        type: integer
+      storage_path:
+        type: string
+    required:
+    - name
+    - storage_path
+    type: object
+  models.NodeInstallationResponse:
+    properties:
+      config_path:
+        type: string
+      install_path:
+        type: string
+      message:
+        type: string
+      node:
+        $ref: '#/definitions/models.StorageNodeResponse'
+      start_command:
+        type: string
+      success:
+        type: boolean
+    type: object
+  models.NodeSetupRequest:
+    properties:
+      master_api_key:
+        type: string
+      master_url:
+        type: string
+      max_storage:
+        minimum: 1
+        type: integer
+      node_api_key:
+        minLength: 10
+        type: string
+      node_name:
+        maxLength: 100
+        minLength: 3
+        type: string
+      storage_path:
+        type: string
+    required:
+    - master_api_key
+    - master_url
+    - node_api_key
+    - node_name
+    - storage_path
+    type: object
+  models.RegisterNodeRequest:
+    properties:
+      auth_key:
+        minLength: 32
+        type: string
+      is_active:
+        type: boolean
+      max_storage:
+        minimum: 0
+        type: integer
+      name:
+        maxLength: 100
+        minLength: 3
+        type: string
+      priority:
+        maximum: 100
+        minimum: 0
+        type: integer
+      url:
+        type: string
+    required:
+    - auth_key
+    - name
+    - url
+    type: object
+  models.StorageNodeResponse:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: string
+      is_active:
+        type: boolean
+      is_healthy:
+        type: boolean
+      last_ping:
+        type: string
+      max_storage:
+        type: integer
+      name:
+        type: string
+      priority:
+        type: integer
+      updated_at:
+        type: string
+      url:
+        type: string
+      used_storage:
+        type: integer
+    type: object
+  models.SystemInfoResponse:
+    properties:
+      free_storage:
+        type: integer
+      is_healthy:
+        type: boolean
+      last_checked:
+        type: string
+      max_storage:
+        type: integer
+      node_count:
+        type: integer
+      setup_type:
+        type: string
+      storage_path:
+        type: string
+      system_name:
+        type: string
+      used_storage:
+        type: integer
+      version:
+        type: string
+    type: object
+  models.UserResponse:
+    properties:
+      created_at:
+        type: string
+      email:
+        type: string
+      id:
+        type: string
+      is_active:
+        type: boolean
+      last_login:
+        type: string
+      role:
+        type: string
+      updated_at:
+        type: string
+      username:
+        type: string
+    type: object
+  node.ListNodesResponse:
+    properties:
+      limit:
+        type: integer
+      message:
+        type: string
+      nodes:
+        items:
+          $ref: '#/definitions/models.StorageNodeResponse'
+        type: array
+      page:
+        type: integer
+      success:
+        type: boolean
+      total:
+        type: integer
+    type: object
+  node.RegisterNodeResponse:
+    properties:
+      message:
+        type: string
+      node:
+        $ref: '#/definitions/models.StorageNodeResponse'
+      success:
+        type: boolean
+    type: object
+  setup.CheckSetupResponse:
+    properties:
+      is_setup:
+        type: boolean
+      message:
+        type: string
+      node_name:
+        type: string
+      setup_type:
+        type: string
+    type: object
+  setup.MasterSetupResponse:
+    properties:
+      admin_user:
+        $ref: '#/definitions/models.UserResponse'
+      config:
+        additionalProperties: true
+        type: object
+      message:
+        type: string
+      success:
+        type: boolean
+    type: object
+  setup.NodeSetupResponse:
+    properties:
+      config:
+        additionalProperties: true
+        type: object
+      message:
+        type: string
+      node:
+        $ref: '#/definitions/models.StorageNodeResponse'
+      success:
+        type: boolean
+    type: object
+  user.ChangePasswordCommand:
+    properties:
+      new_password:
+        minLength: 6
+        type: string
+      old_password:
+        type: string
+      user_id:
+        type: string
+    required:
+    - new_password
+    - old_password
+    type: object
+  user.ChangePasswordResponse:
+    properties:
+      message:
+        type: string
+      success:
+        type: boolean
+    type: object
+  user.GetUserResponse:
+    properties:
+      message:
+        type: string
+      success:
+        type: boolean
+      user:
+        $ref: '#/definitions/models.UserResponse'
+    type: object
+  user.ListUsersResponse:
+    properties:
+      limit:
+        type: integer
+      message:
+        type: string
+      page:
+        type: integer
+      success:
+        type: boolean
+      total:
+        type: integer
+      users:
+        items:
+          $ref: '#/definitions/models.UserResponse'
+        type: array
+    type: object
+  user.LoginCommand:
+    properties:
+      email:
+        minLength: 3
+        type: string
+      password:
+        minLength: 6
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  user.LoginResponse:
+    properties:
+      expires_in:
+        type: integer
+      message:
+        type: string
+      refresh_token:
+        type: string
+      success:
+        type: boolean
+      token:
+        type: string
+      user:
+        $ref: '#/definitions/models.UserResponse'
+    type: object
+  user.LogoutResponse:
+    properties:
+      message:
+        type: string
+      success:
+        type: boolean
+    type: object
+  user.RegisterCommand:
+    properties:
+      email:
+        type: string
+      password:
+        minLength: 6
+        type: string
+      role:
+        enum:
+        - viewer
+        - editor
+        - manager
+        - admin
+        type: string
+      username:
+        maxLength: 50
+        minLength: 3
+        type: string
+    required:
+    - email
+    - password
+    - username
+    type: object
+  user.RegisterResponse:
+    properties:
+      message:
+        type: string
+      success:
+        type: boolean
+      user:
+        $ref: '#/definitions/models.UserResponse'
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: support@shbucket.local
+    name: SHBucket Support
+  description: SHBucket is a distributed object storage system similar to AWS S3
+  license:
+    name: MIT
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: SHBucket API
+  version: 2.0.0
+paths:
+  /api-keys:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a paginated list of API keys for the authenticated user
+      parameters:
+      - description: 'Page number (default: 1)'
+        in: query
+        name: page
+        type: integer
+      - description: 'Items per page (default: 20)'
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of API keys
+          schema:
+            $ref: '#/definitions/apikey.ListAPIKeysResponse'
+        "400":
+          description: Bad request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - Bearer: []
+      summary: List API keys
+      tags:
+      - api-keys
+    post:
+      consumes:
+      - application/json
+      description: Create a new API key for programmatic access
+      parameters:
+      - description: API key creation request
+        in: body
+        name: request
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: API key created successfully
+          schema:
+            $ref: '#/definitions/apikey.CreateAPIKeyResponse'
+        "400":
+          description: Bad request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - Bearer: []
+      summary: Create API key
+      tags:
+      - api-keys
+  /api-keys/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete an API key by ID
+      parameters:
+      - description: API Key ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: API key deleted successfully
+          schema:
+            $ref: '#/definitions/apikey.DeleteAPIKeyResponse'
+        "400":
+          description: Bad request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - Bearer: []
+      summary: Delete API key
+      tags:
+      - api-keys
+  /auth/change-password:
+    post:
+      consumes:
+      - application/json
+      description: Change the password for the authenticated user
+      parameters:
+      - description: Password change details
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/user.ChangePasswordCommand'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Password changed successfully
+          schema:
+            $ref: '#/definitions/user.ChangePasswordResponse'
+        "400":
+          description: Bad request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - Bearer: []
+      summary: Change password
+      tags:
+      - auth
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Authenticate user with email and password, returns JWT token for
+        subsequent requests
+      parameters:
+      - description: Login credentials
+        in: body
+        name: credentials
+        required: true
+        schema:
+          $ref: '#/definitions/user.LoginCommand'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Login successful
+          schema:
+            $ref: '#/definitions/user.LoginResponse'
+        "400":
+          description: Invalid credentials
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: User login
+      tags:
+      - auth
+  /auth/logout:
+    post:
+      consumes:
+      - application/json
+      description: Logout user and invalidate session token
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Logout successful
+          schema:
+            $ref: '#/definitions/user.LogoutResponse'
+        "400":
+          description: Bad request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - Bearer: []
+      summary: User logout
+      tags:
+      - auth
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      description: Register a new user account
+      parameters:
+      - description: User registration data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/user.RegisterCommand'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: User created successfully
+          schema:
+            $ref: '#/definitions/user.RegisterResponse'
+        "400":
+          description: Validation error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: User registration
+      tags:
+      - auth
+  /buckets:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a paginated list of buckets for the authenticated user
+      parameters:
+      - description: 'Page number (default: 1)'
+        in: query
+        name: page
+        type: integer
+      - description: 'Items per page (default: 10)'
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of buckets
+          schema:
+            $ref: '#/definitions/bucket.ListBucketsResponse'
+        "400":
+          description: Bad request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - Bearer: []
+      - ApiKeyAuth: []
+      summary: List buckets
+      tags:
+      - buckets
+    post:
+      consumes:
+      - application/json
+      description: Create a new storage bucket with specified settings
+      parameters:
+      - description: Bucket creation details
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/bucket.CreateBucketCommand'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Bucket created successfully
+          schema:
+            $ref: '#/definitions/bucket.CreateBucketResponse'
+        "400":
+          description: Bad request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - Bearer: []
+      - ApiKeyAuth: []
+      summary: Create new bucket
+      tags:
+      - buckets
+  /buckets/{bucketId}/files:
+    get:
+      consumes:
+      - application/json
+      description: Get a list of all files in a specific bucket
+      parameters:
+      - description: Bucket ID
+        in: path
+        name: bucketId
+        required: true
+        type: string
+      - default: 1
+        description: Page number
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: Items per page
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Files retrieved successfully
+          schema:
+            $ref: '#/definitions/file.ListFilesResponse'
+        "400":
+          description: Bad request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Bucket not found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - Bearer: []
+      - ApiKeyAuth: []
+      summary: List files in bucket
+      tags:
+      - files
+    post:
+      consumes:
+      - multipart/form-data
+      description: Upload a file to the specified bucket with authentication
+      parameters:
+      - description: Bucket ID
+        in: path
+        name: bucketId
+        required: true
+        type: string
+      - description: File to upload
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: File uploaded successfully
+          schema:
+            $ref: '#/definitions/file.DistributedUploadResponse'
+        "400":
+          description: Bad request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - Bearer: []
+      - ApiKeyAuth: []
+      summary: Upload file to bucket
+      tags:
+      - files
+  /buckets/{bucketId}/files/{fileId}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a specific file from a bucket
+      parameters:
+      - description: Bucket ID
+        in: path
+        name: bucketId
+        required: true
+        type: string
+      - description: File ID
+        in: path
+        name: fileId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: File deleted successfully
+          schema:
+            $ref: '#/definitions/file.DeleteFileResponse'
+        "400":
+          description: Bad request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: File not found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - Bearer: []
+      - ApiKeyAuth: []
+      summary: Delete file from bucket
+      tags:
+      - files
+  /buckets/{bucketId}/files/{fileId}/info:
+    get:
+      consumes:
+      - application/json
+      description: Get metadata and information about a specific file
+      parameters:
+      - description: Bucket ID
+        in: path
+        name: bucketId
+        required: true
+        type: string
+      - description: File ID
+        in: path
+        name: fileId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: File metadata retrieved successfully
+          schema:
+            $ref: '#/definitions/file.GetFileResponse'
+        "400":
+          description: Bad request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: File not found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - Bearer: []
+      - ApiKeyAuth: []
+      summary: Get file metadata
+      tags:
+      - files
+  /buckets/{bucketId}/files/{fileId}/signed-url:
+    post:
+      consumes:
+      - application/json
+      description: Generate a temporary signed URL for secure file access with optional
+        single-use functionality
+      parameters:
+      - description: Bucket ID
+        in: path
+        name: bucketId
+        required: true
+        type: string
+      - description: File ID
+        in: path
+        name: fileId
+        required: true
+        type: string
+      - description: Signed URL generation parameters
+        in: body
+        name: request
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Signed URL generated successfully
+          schema:
+            $ref: '#/definitions/file.GenerateSignedURLResponse'
+        "400":
+          description: Bad request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: File not found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - Bearer: []
+      - ApiKeyAuth: []
+      summary: Generate signed URL for file
+      tags:
+      - files
+  /buckets/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a storage bucket by ID
+      parameters:
+      - description: Bucket ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Bucket deleted successfully
+          schema:
+            $ref: '#/definitions/bucket.DeleteBucketResponse'
+        "400":
+          description: Bad request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - Bearer: []
+      - ApiKeyAuth: []
+      summary: Delete bucket
+      tags:
+      - buckets
+    get:
+      consumes:
+      - application/json
+      description: Retrieve detailed information about a specific bucket
+      parameters:
+      - description: Bucket ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Bucket information
+          schema:
+            $ref: '#/definitions/bucket.GetBucketResponse'
+        "400":
+          description: Invalid bucket ID
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Bucket not found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - Bearer: []
+      - ApiKeyAuth: []
+      summary: Get bucket by ID
+      tags:
+      - buckets
+    put:
+      consumes:
+      - application/json
+      description: Update bucket settings and metadata
+      parameters:
+      - description: Bucket ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Bucket update details
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/bucket.UpdateBucketCommand'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Bucket updated successfully
+          schema:
+            $ref: '#/definitions/bucket.UpdateBucketResponse'
+        "400":
+          description: Bad request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - Bearer: []
+      - ApiKeyAuth: []
+      summary: Update bucket
+      tags:
+      - buckets
+  /file/{bucketId}/{fileId}:
+    get:
+      consumes:
+      - application/json
+      description: Serve file content directly with support for signed URLs, API keys,
+        and image processing
+      parameters:
+      - description: Bucket ID
+        in: path
+        name: bucketId
+        required: true
+        type: string
+      - description: File ID
+        in: path
+        name: fileId
+        required: true
+        type: string
+      - description: Signed URL signature for temporary access
+        in: query
+        name: signature
+        type: string
+      - description: Image width for scaling (images only)
+        in: query
+        name: width
+        type: integer
+      - description: Image height for scaling (images only)
+        in: query
+        name: height
+        type: integer
+      - default: 85
+        description: Image quality for JPEG compression
+        in: query
+        name: quality
+        type: integer
+      - description: Predefined resolution (144p, 240p, 360p, 480p, 720p, 1080p, 1440p,
+          2160p, 4k)
+        in: query
+        name: resolution
+        type: string
+      produces:
+      - application/octet-stream
+      - image/jpeg
+      - image/png
+      responses:
+        "200":
+          description: File content served successfully
+        "400":
+          description: Bad request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: File not found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Serve file content
+      tags:
+      - files
+  /node/auth-key:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve the authentication key for a specific node by URL
+      parameters:
+      - description: Node URL
+        in: query
+        name: url
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Node authentication key
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Node not found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get node auth key
+      tags:
+      - nodes
+  /node/ping:
+    post:
+      consumes:
+      - application/json
+      description: Allow a node to ping the master node to update health status
+      parameters:
+      - description: Node URL
+        in: query
+        name: url
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Ping successful
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - Bearer: []
+      summary: Node ping
+      tags:
+      - nodes
+  /node/register:
+    post:
+      consumes:
+      - application/json
+      description: Allow a node to register itself without authentication (for node
+        setup)
+      parameters:
+      - description: Node self-registration details
+        in: body
+        name: request
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Node registered successfully with auth key
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Self-register storage node
+      tags:
+      - nodes
+  /nodes:
+    get:
+      consumes:
+      - application/json
+      description: Get a list of all storage nodes in the distributed system
+      parameters:
+      - default: 1
+        description: Page number
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: Items per page
+        in: query
+        name: limit
+        type: integer
+      - default: false
+        description: Show only active nodes
+        in: query
+        name: active
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Nodes retrieved successfully
+          schema:
+            $ref: '#/definitions/node.ListNodesResponse'
+        "400":
+          description: Bad request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - Bearer: []
+      summary: List storage nodes
+      tags:
+      - nodes
+    post:
+      consumes:
+      - application/json
+      description: Register a new storage node in the distributed system
+      parameters:
+      - description: Node registration details
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.RegisterNodeRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Node registered successfully
+          schema:
+            $ref: '#/definitions/node.RegisterNodeResponse'
+        "400":
+          description: Bad request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - Bearer: []
+      summary: Register storage node
+      tags:
+      - nodes
+  /nodes/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Remove a storage node from the distributed system
+      parameters:
+      - description: Node ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Node deleted successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Node not found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - Bearer: []
+      summary: Delete storage node
+      tags:
+      - nodes
+  /nodes/{id}/health:
+    get:
+      consumes:
+      - application/json
+      description: Check the health status of a specific storage node
+      parameters:
+      - description: Node ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Node health status
+          schema:
+            $ref: '#/definitions/models.NodeHealthCheckResponse'
+        "400":
+          description: Bad request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Node not found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - Bearer: []
+      summary: Check node health
+      tags:
+      - nodes
+  /nodes/install:
+    post:
+      consumes:
+      - application/json
+      description: Install and configure a new storage node
+      parameters:
+      - description: Node installation details
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.NodeInstallationRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Node installed successfully
+          schema:
+            $ref: '#/definitions/models.NodeInstallationResponse'
+        "400":
+          description: Bad request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - Bearer: []
+      summary: Install storage node
+      tags:
+      - nodes
+  /setup/info:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve system status and information after setup
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: System information
+          schema:
+            $ref: '#/definitions/models.SystemInfoResponse'
+        "500":
+          description: Internal server error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get system information
+      tags:
+      - setup
+  /setup/master:
+    post:
+      consumes:
+      - application/json
+      description: Initialize the system as a master node with database and admin
+        user
+      parameters:
+      - description: Master setup configuration
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.MasterSetupRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Master setup successful
+          schema:
+            $ref: '#/definitions/setup.MasterSetupResponse'
+        "400":
+          description: Invalid request or setup failed
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Setup master node
+      tags:
+      - setup
+  /setup/node:
+    post:
+      consumes:
+      - application/json
+      description: Initialize the system as a storage node connected to a master
+      parameters:
+      - description: Node setup configuration
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.NodeSetupRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Node setup successful
+          schema:
+            $ref: '#/definitions/setup.NodeSetupResponse'
+        "400":
+          description: Invalid request or setup failed
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Setup node
+      tags:
+      - setup
+  /setup/status:
+    get:
+      consumes:
+      - application/json
+      description: Check if the system has been set up and configured
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Setup status information
+          schema:
+            $ref: '#/definitions/setup.CheckSetupResponse'
+        "500":
+          description: Internal server error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Check setup status
+      tags:
+      - setup
+  /users:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a paginated list of all users (admin only)
+      parameters:
+      - description: 'Page number (default: 1)'
+        in: query
+        name: page
+        type: integer
+      - description: 'Items per page (default: 10)'
+        in: query
+        name: limit
+        type: integer
+      - description: Include user buckets
+        in: query
+        name: include_buckets
+        type: boolean
+      - description: Include user sessions
+        in: query
+        name: include_sessions
+        type: boolean
+      - description: Include all related data
+        in: query
+        name: include_all
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of users
+          schema:
+            $ref: '#/definitions/user.ListUsersResponse'
+        "400":
+          description: Bad request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - Bearer: []
+      summary: List users
+      tags:
+      - users
+  /users/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get information about a specific user by ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User information
+          schema:
+            $ref: '#/definitions/user.GetUserResponse'
+        "400":
+          description: Invalid user ID
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: User not found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - Bearer: []
+      summary: Get user by ID
+      tags:
+      - users
+securityDefinitions:
+  ApiKeyAuth:
+    description: API Key for authentication
+    in: header
+    name: X-API-Key
+    type: apiKey
+  Bearer:
+    description: Type "Bearer" followed by a space and JWT token.
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

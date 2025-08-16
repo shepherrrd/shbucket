@@ -1,0 +1,403 @@
+# =============================================================================
+# SHBucket - Comprehensive .gitignore
+# =============================================================================
+
+# =============================================================================
+# ENVIRONMENT & CONFIGURATION FILES
+# =============================================================================
+.env
+.env.local
+.env.development
+.env.production
+.env.staging
+.env.test
+.env.*.local
+
+*.sh
+# Local configuration overrides
+config/local.yml
+config/local.yaml
+config/local.json
+config/development.yml
+config/production.yml
+config/staging.yml
+
+# =============================================================================
+# GO LANGUAGE SPECIFIC
+# =============================================================================
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool
+*.out
+
+# Dependency directories
+vendor/
+
+# Go workspace file
+go.work
+go.work.sum
+
+# Build artifacts
+build/
+dist/
+tmp/
+bin/
+main
+shbucket
+
+# Air live reload
+.air.toml.local
+build-errors.log
+
+# =============================================================================
+# NODE.JS / FRONTEND (web/ directory)
+# =============================================================================
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# nyc test coverage
+.nyc_output
+
+# Grunt intermediate storage
+.grunt
+
+# Bower dependency directory
+bower_components
+
+# node-waf configuration
+.lock-wscript
+
+# Compiled binary addons
+build/Release
+
+# Dependency directories
+jspm_packages/
+
+# TypeScript v1 declaration files
+typings/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# parcel-bundler cache
+.cache
+.parcel-cache
+
+# Next.js build output
+.next
+out/
+
+# Nuxt.js build / generate output
+.nuxt
+dist
+
+# Vite build output
+web/dist/
+web/build/
+
+# Storybook build outputs
+.out
+.storybook-out
+
+# Temporary folders
+.tmp
+.temp
+
+# =============================================================================
+# DATABASE FILES
+# =============================================================================
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+*.db-wal
+*.db-shm
+
+# PostgreSQL
+*.dump
+*.sql.gz
+
+# =============================================================================
+# STORAGE & UPLOADS
+# =============================================================================
+# Local storage directories
+uploads/
+files/
+media/
+assets/uploads/
+
+# Script directories that store runtime data
+scripts/storage/
+scripts/config/
+scripts/certs/
+scripts/logs/
+
+# =============================================================================
+# LOGS & MONITORING
+# =============================================================================
+logs/
+*.log
+log/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Runtime logs
+runtime.log
+error.log
+access.log
+debug.log
+
+# =============================================================================
+# SECURITY & CERTIFICATES
+# =============================================================================
+# SSL certificates
+*.pem
+*.key
+*.crt
+*.csr
+*.p12
+*.pfx
+*.jks
+
+# Certificate directories
+certs/
+ssl/
+certificates/
+
+# JWT secrets and keys
+jwt.key
+jwt.pem
+*.secret
+
+# =============================================================================
+# DEVELOPMENT & BUILD TOOLS
+# =============================================================================
+# Docker development files
+docker-compose.override.yml
+docker-compose.local.yml
+.dockerignore.local
+
+# Hot reload / development
+.hot-reload
+.dev-server
+
+# Build tools
+Makefile.local
+.make/
+
+# =============================================================================
+# IDE & EDITOR FILES
+# =============================================================================
+# Visual Studio Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# JetBrains IDEs
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+.netrwhist
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# =============================================================================
+# OPERATING SYSTEM FILES
+# =============================================================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.tmp
+*.temp
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# =============================================================================
+# TESTING & COVERAGE
+# =============================================================================
+# Test results
+testdata/
+test-results/
+coverage/
+.coverage
+htmlcov/
+.tox/
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Go test coverage
+profile.out
+coverage.out
+
+# =============================================================================
+# BACKUP & TEMPORARY FILES
+# =============================================================================
+# Backup files
+*.bak
+*.backup
+*.old
+*.orig
+*.save
+*.swp
+*.tmp
+
+# Temporary directories
+temp/
+tmp/
+.tmp/
+.temp/
+
+# =============================================================================
+# MISCELLANEOUS
+# =============================================================================
+# Local development scripts
+run-local.sh
+start-local.sh
+dev-*.local.sh
+
+# Documentation builds
+docs/_build/
+docs/site/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# PEP 582
+__pycache__/
+*.py[cod]
+*$py.class
+
+# =============================================================================
+# PROJECT-SPECIFIC EXCLUDES
+# =============================================================================
+# SHBucket specific build artifacts
+cmd/shbucket/main
+
+
+# Local development overrides
+docker-compose.dev.local.yml
+docker-compose.prod.local.yml
+
+# Migration backups
+migrations/backup/
+migrations/*.backup
+
+# API documentation generation
+docs/api/generated/
+
+# Performance profiles
+*.prof
+*.pprof
+
+# Debug binaries
+debug
+__debug_bin
+
+# Local test files
+test-*.json
+test-*.yaml
+test-*.yml
+storage/*
+

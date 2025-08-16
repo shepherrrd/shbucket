@@ -1,0 +1,1297 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2025-08-16T10:30:43.736185+01:00",
+  "entities": {
+    "APIKey": {
+      "name": "APIKey",
+      "table_name": "APIKey",
+      "fields": {
+        "CreatedAt": {
+          "name": "CreatedAt",
+          "column_name": "CreatedAt",
+          "type": "time.Time",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "autoCreateTime": ""
+          }
+        },
+        "ExpiresAt": {
+          "name": "ExpiresAt",
+          "column_name": "ExpiresAt",
+          "type": "*time.Time",
+          "is_primary": false,
+          "is_nullable": true,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {}
+        },
+        "Id": {
+          "name": "Id",
+          "column_name": "Id",
+          "type": "uuid.UUID",
+          "is_primary": true,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": "gen_random_uuid()",
+          "tags": {
+            "default": "gen_random_uuid()",
+            "primary_key": "",
+            "type": "uuid"
+          }
+        },
+        "IsActive": {
+          "name": "IsActive",
+          "column_name": "IsActive",
+          "type": "bool",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": "true",
+          "tags": {
+            "default": "true",
+            "not null": ""
+          }
+        },
+        "KeyHash": {
+          "name": "KeyHash",
+          "column_name": "KeyHash",
+          "type": "string",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": true,
+          "default_value": null,
+          "tags": {
+            "not null": "",
+            "unique": ""
+          }
+        },
+        "KeyPrefix": {
+          "name": "KeyPrefix",
+          "column_name": "KeyPrefix",
+          "type": "string",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "not null": ""
+          }
+        },
+        "LastUsed": {
+          "name": "LastUsed",
+          "column_name": "LastUsed",
+          "type": "*time.Time",
+          "is_primary": false,
+          "is_nullable": true,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {}
+        },
+        "Name": {
+          "name": "Name",
+          "column_name": "Name",
+          "type": "string",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "not null": ""
+          }
+        },
+        "Permissions": {
+          "name": "Permissions",
+          "column_name": "Permissions",
+          "type": "datatypes.JSON",
+          "is_primary": false,
+          "is_nullable": true,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "type": "jsonb"
+          }
+        },
+        "UpdatedAt": {
+          "name": "UpdatedAt",
+          "column_name": "UpdatedAt",
+          "type": "time.Time",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "autoUpdateTime": ""
+          }
+        },
+        "User": {
+          "name": "User",
+          "column_name": "User",
+          "type": "entities.User",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "foreignKey": "UserId"
+          }
+        },
+        "UserId": {
+          "name": "UserId",
+          "column_name": "UserId",
+          "type": "uuid.UUID",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "not null": "",
+            "type": "uuid"
+          }
+        }
+      },
+      "indexes": []
+    },
+    "Bucket": {
+      "name": "Bucket",
+      "table_name": "Bucket",
+      "fields": {
+        "AuthRule": {
+          "name": "AuthRule",
+          "column_name": "AuthRule",
+          "type": "entities.AuthRule",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "embedded": "",
+            "embeddedPrefix": "auth_"
+          }
+        },
+        "CreatedAt": {
+          "name": "CreatedAt",
+          "column_name": "CreatedAt",
+          "type": "time.Time",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "autoCreateTime": ""
+          }
+        },
+        "Description": {
+          "name": "Description",
+          "column_name": "Description",
+          "type": "string",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {}
+        },
+        "Files": {
+          "name": "Files",
+          "column_name": "Files",
+          "type": "[]entities.File",
+          "is_primary": false,
+          "is_nullable": true,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "foreignKey": "BucketId"
+          }
+        },
+        "Id": {
+          "name": "Id",
+          "column_name": "Id",
+          "type": "uuid.UUID",
+          "is_primary": true,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": "gen_random_uuid()",
+          "tags": {
+            "default": "gen_random_uuid()",
+            "primary_key": "",
+            "type": "uuid"
+          }
+        },
+        "Name": {
+          "name": "Name",
+          "column_name": "Name",
+          "type": "string",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "not null": "",
+            "uniqueIndex": ""
+          }
+        },
+        "Owner": {
+          "name": "Owner",
+          "column_name": "Owner",
+          "type": "entities.User",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "foreignKey": "OwnerId"
+          }
+        },
+        "OwnerId": {
+          "name": "OwnerId",
+          "column_name": "OwnerId",
+          "type": "uuid.UUID",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "index": "",
+            "not null": "",
+            "type": "uuid"
+          }
+        },
+        "Settings": {
+          "name": "Settings",
+          "column_name": "Settings",
+          "type": "entities.BucketSettings",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "embedded": "",
+            "embeddedPrefix": "settings_"
+          }
+        },
+        "UpdatedAt": {
+          "name": "UpdatedAt",
+          "column_name": "UpdatedAt",
+          "type": "time.Time",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "autoUpdateTime": ""
+          }
+        }
+      },
+      "indexes": []
+    },
+    "File": {
+      "name": "File",
+      "table_name": "File",
+      "fields": {
+        "AccessedAt": {
+          "name": "AccessedAt",
+          "column_name": "AccessedAt",
+          "type": "*time.Time",
+          "is_primary": false,
+          "is_nullable": true,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {}
+        },
+        "AuthRule": {
+          "name": "AuthRule",
+          "column_name": "AuthRule",
+          "type": "entities.AuthRule",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "embedded": "",
+            "embeddedPrefix": "auth_"
+          }
+        },
+        "Bucket": {
+          "name": "Bucket",
+          "column_name": "Bucket",
+          "type": "entities.Bucket",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "foreignKey": "BucketId"
+          }
+        },
+        "BucketId": {
+          "name": "BucketId",
+          "column_name": "BucketId",
+          "type": "uuid.UUID",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "index": "",
+            "not null": "",
+            "type": "uuid"
+          }
+        },
+        "Checksum": {
+          "name": "Checksum",
+          "column_name": "Checksum",
+          "type": "string",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "not null": ""
+          }
+        },
+        "CreatedAt": {
+          "name": "CreatedAt",
+          "column_name": "CreatedAt",
+          "type": "time.Time",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "autoCreateTime": ""
+          }
+        },
+        "Id": {
+          "name": "Id",
+          "column_name": "Id",
+          "type": "uuid.UUID",
+          "is_primary": true,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": "gen_random_uuid()",
+          "tags": {
+            "column": "Id",
+            "default": "gen_random_uuid()",
+            "primary_key": "",
+            "type": "uuid"
+          }
+        },
+        "Metadata": {
+          "name": "Metadata",
+          "column_name": "Metadata",
+          "type": "entities.FileMetadata",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "embedded": "",
+            "embeddedPrefix": "metadata_"
+          }
+        },
+        "MimeType": {
+          "name": "MimeType",
+          "column_name": "MimeType",
+          "type": "string",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "not null": ""
+          }
+        },
+        "Name": {
+          "name": "Name",
+          "column_name": "Name",
+          "type": "string",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "not null": ""
+          }
+        },
+        "OriginalName": {
+          "name": "OriginalName",
+          "column_name": "OriginalName",
+          "type": "string",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "not null": ""
+          }
+        },
+        "Path": {
+          "name": "Path",
+          "column_name": "Path",
+          "type": "string",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "not null": ""
+          }
+        },
+        "SecuredUrl": {
+          "name": "SecuredUrl",
+          "column_name": "SecuredUrl",
+          "type": "string",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "not null": ""
+          }
+        },
+        "Size": {
+          "name": "Size",
+          "column_name": "Size",
+          "type": "int64",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "not null": ""
+          }
+        },
+        "UpdatedAt": {
+          "name": "UpdatedAt",
+          "column_name": "UpdatedAt",
+          "type": "time.Time",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "autoUpdateTime": ""
+          }
+        },
+        "UploadedBy": {
+          "name": "UploadedBy",
+          "column_name": "UploadedBy",
+          "type": "uuid.UUID",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "index": "",
+            "not null": "",
+            "type": "uuid"
+          }
+        },
+        "Version": {
+          "name": "Version",
+          "column_name": "Version",
+          "type": "int",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": "1",
+          "tags": {
+            "default": "1",
+            "not null": ""
+          }
+        }
+      },
+      "indexes": []
+    },
+    "NodeFileMetadata": {
+      "name": "NodeFileMetadata",
+      "table_name": "NodeFileMetadata",
+      "fields": {
+        "BucketId": {
+          "name": "BucketId",
+          "column_name": "BucketId",
+          "type": "uuid.UUID",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "not null": "",
+            "type": "uuid"
+          }
+        },
+        "BucketName": {
+          "name": "BucketName",
+          "column_name": "BucketName",
+          "type": "string",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "not null": "",
+            "type": "text"
+          }
+        },
+        "CreatedAt": {
+          "name": "CreatedAt",
+          "column_name": "CreatedAt",
+          "type": "time.Time",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "autoCreateTime": ""
+          }
+        },
+        "Filename": {
+          "name": "Filename",
+          "column_name": "Filename",
+          "type": "string",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "not null": "",
+            "type": "text"
+          }
+        },
+        "Id": {
+          "name": "Id",
+          "column_name": "Id",
+          "type": "uuid.UUID",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": "gen_random_uuid()",
+          "tags": {
+            "default": "gen_random_uuid()",
+            "primaryKey": "",
+            "type": "uuid"
+          }
+        },
+        "Path": {
+          "name": "Path",
+          "column_name": "Path",
+          "type": "string",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "not null": "",
+            "type": "text"
+          }
+        },
+        "Size": {
+          "name": "Size",
+          "column_name": "Size",
+          "type": "int64",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "not null": "",
+            "type": "bigint"
+          }
+        }
+      },
+      "indexes": []
+    },
+    "Session": {
+      "name": "Session",
+      "table_name": "Session",
+      "fields": {
+        "CreatedAt": {
+          "name": "CreatedAt",
+          "column_name": "CreatedAt",
+          "type": "time.Time",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "autoCreateTime": ""
+          }
+        },
+        "ExpiresAt": {
+          "name": "ExpiresAt",
+          "column_name": "ExpiresAt",
+          "type": "time.Time",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "not null": ""
+          }
+        },
+        "Id": {
+          "name": "Id",
+          "column_name": "Id",
+          "type": "uuid.UUID",
+          "is_primary": true,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": "gen_random_uuid()",
+          "tags": {
+            "column": "Id",
+            "default": "gen_random_uuid()",
+            "primary_key": "",
+            "type": "uuid"
+          }
+        },
+        "IsActive": {
+          "name": "IsActive",
+          "column_name": "IsActive",
+          "type": "bool",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": "true",
+          "tags": {
+            "default": "true",
+            "not null": ""
+          }
+        },
+        "LastUsed": {
+          "name": "LastUsed",
+          "column_name": "LastUsed",
+          "type": "time.Time",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "autoUpdateTime": ""
+          }
+        },
+        "TokenHash": {
+          "name": "TokenHash",
+          "column_name": "TokenHash",
+          "type": "string",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "not null": "",
+            "uniqueIndex": ""
+          }
+        },
+        "User": {
+          "name": "User",
+          "column_name": "User",
+          "type": "entities.User",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "foreignKey": "UserId"
+          }
+        },
+        "UserId": {
+          "name": "UserId",
+          "column_name": "UserId",
+          "type": "uuid.UUID",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "index": "",
+            "not null": "",
+            "type": "uuid"
+          }
+        }
+      },
+      "indexes": []
+    },
+    "SetupConfig": {
+      "name": "SetupConfig",
+      "table_name": "SetupConfig",
+      "fields": {
+        "ConfigData": {
+          "name": "ConfigData",
+          "column_name": "ConfigData",
+          "type": "datatypes.JSON",
+          "is_primary": false,
+          "is_nullable": true,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "type": "jsonb"
+          }
+        },
+        "CreatedAt": {
+          "name": "CreatedAt",
+          "column_name": "CreatedAt",
+          "type": "time.Time",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": "CURRENT_TIMESTAMP",
+          "tags": {
+            "default": "CURRENT_TIMESTAMP",
+            "not null": ""
+          }
+        },
+        "ID": {
+          "name": "ID",
+          "column_name": "ID",
+          "type": "uuid.UUID",
+          "is_primary": true,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": "gen_random_uuid()",
+          "tags": {
+            "default": "gen_random_uuid()",
+            "primary_key": "",
+            "type": "uuid"
+          }
+        },
+        "IsSetup": {
+          "name": "IsSetup",
+          "column_name": "IsSetup",
+          "type": "bool",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": "false",
+          "tags": {
+            "default": "false",
+            "not null": ""
+          }
+        },
+        "MasterURL": {
+          "name": "MasterURL",
+          "column_name": "MasterURL",
+          "type": "string",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "size": "500"
+          }
+        },
+        "MaxStorage": {
+          "name": "MaxStorage",
+          "column_name": "MaxStorage",
+          "type": "int64",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": "0",
+          "tags": {
+            "default": "0"
+          }
+        },
+        "NodeName": {
+          "name": "NodeName",
+          "column_name": "NodeName",
+          "type": "string",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "size": "100"
+          }
+        },
+        "SetupType": {
+          "name": "SetupType",
+          "column_name": "SetupType",
+          "type": "string",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "not null": ""
+          }
+        },
+        "StoragePath": {
+          "name": "StoragePath",
+          "column_name": "StoragePath",
+          "type": "string",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "size": "500"
+          }
+        },
+        "UpdatedAt": {
+          "name": "UpdatedAt",
+          "column_name": "UpdatedAt",
+          "type": "time.Time",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": "CURRENT_TIMESTAMP",
+          "tags": {
+            "default": "CURRENT_TIMESTAMP",
+            "not null": ""
+          }
+        }
+      },
+      "indexes": []
+    },
+    "SignedURL": {
+      "name": "SignedURL",
+      "table_name": "SignedURL",
+      "fields": {
+        "BucketName": {
+          "name": "BucketName",
+          "column_name": "BucketName",
+          "type": "string",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "not null": ""
+          }
+        },
+        "CreatedAt": {
+          "name": "CreatedAt",
+          "column_name": "CreatedAt",
+          "type": "time.Time",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "autoCreateTime": ""
+          }
+        },
+        "ExpiresAt": {
+          "name": "ExpiresAt",
+          "column_name": "ExpiresAt",
+          "type": "time.Time",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "index": "",
+            "not null": ""
+          }
+        },
+        "FileName": {
+          "name": "FileName",
+          "column_name": "FileName",
+          "type": "string",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "not null": ""
+          }
+        },
+        "ID": {
+          "name": "ID",
+          "column_name": "ID",
+          "type": "uuid.UUID",
+          "is_primary": true,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": "gen_random_uuid()",
+          "tags": {
+            "default": "gen_random_uuid()",
+            "primary_key": "",
+            "type": "uuid"
+          }
+        },
+        "Method": {
+          "name": "Method",
+          "column_name": "Method",
+          "type": "string",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "not null": ""
+          }
+        },
+        "Signature": {
+          "name": "Signature",
+          "column_name": "Signature",
+          "type": "string",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "not null": "",
+            "uniqueIndex": ""
+          }
+        },
+        "SingleUse": {
+          "name": "SingleUse",
+          "column_name": "SingleUse",
+          "type": "bool",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": "false",
+          "tags": {
+            "default": "false",
+            "not null": ""
+          }
+        },
+        "Used": {
+          "name": "Used",
+          "column_name": "Used",
+          "type": "bool",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": "false",
+          "tags": {
+            "default": "false",
+            "not null": ""
+          }
+        },
+        "UsedAt": {
+          "name": "UsedAt",
+          "column_name": "UsedAt",
+          "type": "*time.Time",
+          "is_primary": false,
+          "is_nullable": true,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {}
+        }
+      },
+      "indexes": []
+    },
+    "StorageNode": {
+      "name": "StorageNode",
+      "table_name": "StorageNode",
+      "fields": {
+        "AuthKey": {
+          "name": "AuthKey",
+          "column_name": "AuthKey",
+          "type": "string",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "not null": ""
+          }
+        },
+        "CreatedAt": {
+          "name": "CreatedAt",
+          "column_name": "CreatedAt",
+          "type": "time.Time",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "autoCreateTime": ""
+          }
+        },
+        "Id": {
+          "name": "Id",
+          "column_name": "Id",
+          "type": "uuid.UUID",
+          "is_primary": true,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": "gen_random_uuid()",
+          "tags": {
+            "default": "gen_random_uuid()",
+            "primary_key": "",
+            "type": "uuid"
+          }
+        },
+        "IsActive": {
+          "name": "IsActive",
+          "column_name": "IsActive",
+          "type": "bool",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": "true",
+          "tags": {
+            "default": "true",
+            "not null": ""
+          }
+        },
+        "IsHealthy": {
+          "name": "IsHealthy",
+          "column_name": "IsHealthy",
+          "type": "bool",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": "false",
+          "tags": {
+            "default": "false",
+            "not null": ""
+          }
+        },
+        "LastPing": {
+          "name": "LastPing",
+          "column_name": "LastPing",
+          "type": "*time.Time",
+          "is_primary": false,
+          "is_nullable": true,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {}
+        },
+        "MaxStorage": {
+          "name": "MaxStorage",
+          "column_name": "MaxStorage",
+          "type": "int64",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": "0",
+          "tags": {
+            "default": "0",
+            "not null": ""
+          }
+        },
+        "Name": {
+          "name": "Name",
+          "column_name": "Name",
+          "type": "string",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "not null": ""
+          }
+        },
+        "Priority": {
+          "name": "Priority",
+          "column_name": "Priority",
+          "type": "int",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": "0",
+          "tags": {
+            "default": "0",
+            "not null": ""
+          }
+        },
+        "URL": {
+          "name": "URL",
+          "column_name": "URL",
+          "type": "string",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": true,
+          "default_value": null,
+          "tags": {
+            "not null": "",
+            "unique": ""
+          }
+        },
+        "UpdatedAt": {
+          "name": "UpdatedAt",
+          "column_name": "UpdatedAt",
+          "type": "time.Time",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "autoUpdateTime": ""
+          }
+        },
+        "UsedStorage": {
+          "name": "UsedStorage",
+          "column_name": "UsedStorage",
+          "type": "int64",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": "0",
+          "tags": {
+            "default": "0",
+            "not null": ""
+          }
+        }
+      },
+      "indexes": []
+    },
+    "User": {
+      "name": "User",
+      "table_name": "User",
+      "fields": {
+        "Buckets": {
+          "name": "Buckets",
+          "column_name": "Buckets",
+          "type": "[]entities.Bucket",
+          "is_primary": false,
+          "is_nullable": true,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "foreignKey": "OwnerId"
+          }
+        },
+        "CreatedAt": {
+          "name": "CreatedAt",
+          "column_name": "CreatedAt",
+          "type": "time.Time",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "autoCreateTime": "",
+            "old_name": "created_at"
+          }
+        },
+        "Email": {
+          "name": "Email",
+          "column_name": "Email",
+          "type": "string",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "not null": "",
+            "uniqueIndex": ""
+          }
+        },
+        "Id": {
+          "name": "Id",
+          "column_name": "Id",
+          "type": "uuid.UUID",
+          "is_primary": true,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": "gen_random_uuid()",
+          "tags": {
+            "column": "Id",
+            "default": "gen_random_uuid()",
+            "primary_key": "",
+            "type": "uuid"
+          }
+        },
+        "IsActive": {
+          "name": "IsActive",
+          "column_name": "IsActive",
+          "type": "bool",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": "true",
+          "tags": {
+            "default": "true",
+            "not null": ""
+          }
+        },
+        "LastLoginTime": {
+          "name": "LastLoginTime",
+          "column_name": "LastLoginTime",
+          "type": "*time.Time",
+          "is_primary": false,
+          "is_nullable": true,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "old_name": "last_login"
+          }
+        },
+        "PasswordHash": {
+          "name": "PasswordHash",
+          "column_name": "PasswordHash",
+          "type": "string",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "not null": ""
+          }
+        },
+        "PhoneNumber": {
+          "name": "PhoneNumber",
+          "column_name": "PhoneNumber",
+          "type": "*string",
+          "is_primary": false,
+          "is_nullable": true,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "size": "20"
+          }
+        },
+        "Role": {
+          "name": "Role",
+          "column_name": "Role",
+          "type": "string",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": "'viewer'",
+          "tags": {
+            "default": "'viewer'",
+            "not null": ""
+          }
+        },
+        "Sessions": {
+          "name": "Sessions",
+          "column_name": "Sessions",
+          "type": "[]entities.Session",
+          "is_primary": false,
+          "is_nullable": true,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "foreignKey": "UserId"
+          }
+        },
+        "UpdatedAt": {
+          "name": "UpdatedAt",
+          "column_name": "UpdatedAt",
+          "type": "time.Time",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "autoUpdateTime": ""
+          }
+        },
+        "Username": {
+          "name": "Username",
+          "column_name": "Username",
+          "type": "string",
+          "is_primary": false,
+          "is_nullable": false,
+          "is_unique": false,
+          "default_value": null,
+          "tags": {
+            "not null": "",
+            "uniqueIndex": ""
+          }
+        }
+      },
+      "indexes": []
+    }
+  },
+  "checksum": "f34c1d866f42286b34019a2229bf2860"
+}

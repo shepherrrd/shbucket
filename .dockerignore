@@ -1,0 +1,62 @@
+# Git
+.git
+.gitignore
+
+# Documentation
+README.md
+LICENSE
+*.md
+
+# Development files
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node.js (for web UI development)
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Go
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+vendor/
+
+# Build artifacts
+build/
+dist/
+tmp/
+
+# Logs
+*.log
+logs/
+
+# Storage (development)
+storage/
+uploads/
+
+# Docker
+docker-compose.yml
+docker-compose.*.yml
+Dockerfile*
+
+# Test files
+*_test.go
+testdata/
