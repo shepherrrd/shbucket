@@ -12,6 +12,7 @@ import (
 	"os"
 	"path/filepath"
 
+	"shbucket/src/Infrastructure/Config"
 	"shbucket/src/Infrastructure/Data/Entities"
 	"shbucket/src/Infrastructure/Persistence"
 	"shbucket/src/Models"
@@ -40,11 +41,13 @@ type DistributedUploadResponse struct {
 
 type DistributedUploadRequestHandler struct {
 	dbContext *persistence.AppDbContext
+	settings  *config.Settings
 }
 
 func NewDistributedUploadRequestHandler(dbContext *persistence.AppDbContext) *DistributedUploadRequestHandler {
 	return &DistributedUploadRequestHandler{
 		dbContext: dbContext,
+		settings:  config.GetSettings(),
 	}
 }
 
@@ -182,6 +185,12 @@ func (h *DistributedUploadRequestHandler) Handle(ctx context.Context, command *D
 		return nil, fmt.Errorf("failed to marshal custom metadata: %w", err)
 	}
 	
+	// Generate secured URL for the file
+	securedURL := fmt.Sprintf("%s/api/v1/file/%s/%s", 
+		h.settings.BaseURL, 
+		command.BucketID.String(), 
+		fileID.String())
+
 	file := &entities.File{
 		Id:           fileID, 
 		BucketId:     command.BucketID,
@@ -191,7 +200,7 @@ func (h *DistributedUploadRequestHandler) Handle(ctx context.Context, command *D
 		Size:         fileSize,
 		MimeType:     command.ContentType,
 		Checksum:     checksum,
-
+		SecuredUrl:   securedURL,
 		Version:      1,
 		AuthRule: entities.AuthRule{
 			Type:    bucket.AuthRule.Type,
@@ -314,3 +323,4 @@ func (h *DistributedUploadRequestHandler) uploadToNode(node *entities.StorageNod
 	
 	return resp.StatusCode == http.StatusOK || resp.StatusCode == http.StatusCreated, nil
 }
+

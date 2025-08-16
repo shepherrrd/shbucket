@@ -207,6 +207,11 @@ export default function BucketView() {
                 <div
                   key={file.id}
                   onClick={() => setSelectedFile(file)}
+                  onDoubleClick={() => {
+                    if (file.secured_url) {
+                      window.open(file.secured_url, '_blank', 'noopener,noreferrer');
+                    }
+                  }}
                   className={`group cursor-pointer rounded-lg border-2 transition-all ${
                     selectedFile?.id === file.id
                       ? 'border-primary-500 bg-primary-500/10'
@@ -232,6 +237,9 @@ export default function BucketView() {
                   <div className="px-3 pb-3">
                     <p className="text-sm font-medium text-white truncate" title={file.name}>
                       {file.name}
+                      {file.secured_url && (
+                        <LinkIcon className="inline h-3 w-3 ml-1 text-primary-400" />
+                      )}
                     </p>
                     <p className="text-xs text-dark-400">
                       {formatFileSize(file.size)}
@@ -304,28 +312,46 @@ export default function BucketView() {
                   <p className="text-xs text-dark-400 font-mono break-all">{selectedFile.checksum}</p>
                 </div>
 
+                {selectedFile.secured_url && (
+                  <div>
+                    <label className="block text-sm font-medium text-dark-300 mb-1">Secured URL</label>
+                    <p className="text-xs text-primary-400 break-all">Available</p>
+                  </div>
+                )}
+
                 {/* Actions */}
                 <div className="pt-4 border-t border-dark-700 space-y-3">
-                  <button
-                    onClick={async () => {
-                      try {
-                        const blob = await apiClient.downloadFile(bucketId!, selectedFile.id);
-                        const url = window.URL.createObjectURL(blob);
-                        const a = document.createElement('a');
-                        a.href = url;
-                        a.download = selectedFile.name;
-                        document.body.appendChild(a);
-                        a.click();
-                        window.URL.revokeObjectURL(url);
-                        document.body.removeChild(a);
-                      } catch (error) {
-                        toast.error('Failed to download file');
-                      }
-                    }}
-                    className="block w-full px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white text-center font-medium rounded-lg transition-colors"
-                  >
-                    Download
-                  </button>
+                  {selectedFile.secured_url ? (
+                    <a
+                      href={selectedFile.secured_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block w-full px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white text-center font-medium rounded-lg transition-colors"
+                    >
+                      Open File
+                    </a>
+                  ) : (
+                    <button
+                      onClick={async () => {
+                        try {
+                          const blob = await apiClient.downloadFile(bucketId!, selectedFile.id);
+                          const url = window.URL.createObjectURL(blob);
+                          const a = document.createElement('a');
+                          a.href = url;
+                          a.download = selectedFile.name;
+                          document.body.appendChild(a);
+                          a.click();
+                          window.URL.revokeObjectURL(url);
+                          document.body.removeChild(a);
+                        } catch (error) {
+                          toast.error('Failed to download file');
+                        }
+                      }}
+                      className="block w-full px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white text-center font-medium rounded-lg transition-colors"
+                    >
+                      Download
+                    </a>
+                  )}
                   <button
                     onClick={() => setShowSignedURLDialog(true)}
                     className="block w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-center font-medium rounded-lg transition-colors flex items-center justify-center"

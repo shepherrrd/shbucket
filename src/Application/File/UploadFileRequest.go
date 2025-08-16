@@ -11,6 +11,7 @@ import (
 	
 	"github.com/google/uuid"
 	"gorm.io/datatypes"
+	"shbucket/src/Infrastructure/Config"
 	"shbucket/src/Infrastructure/Data/Entities"
 	"shbucket/src/Infrastructure/Persistence"
 	"shbucket/src/Models"
@@ -35,11 +36,13 @@ type UploadFileResponse struct {
 
 type UploadFileRequestHandler struct {
 	dbContext *persistence.AppDbContext
+	settings  *config.Settings
 }
 
 func NewUploadFileRequestHandler(dbContext *persistence.AppDbContext) *UploadFileRequestHandler {
 	return &UploadFileRequestHandler{
 		dbContext: dbContext,
+		settings:  config.GetSettings(),
 	}
 }
 
@@ -82,8 +85,17 @@ func (h *UploadFileRequestHandler) Handle(ctx context.Context, command *UploadFi
 	}
 	checksum := fmt.Sprintf("%x", hash.Sum(nil))
 
+	// Generate file ID first so we can create the secured URL
+	fileID := uuid.New()
+	
+	// Generate secured URL for the file
+	securedURL := fmt.Sprintf("%s/api/v1/file/%s/%s", 
+		h.settings.BaseURL, 
+		command.BucketID.String(), 
+		fileID.String())
+
 	file := &entities.File{
-		Id:           uuid.Nil, // Explicitly set to nil to ensure auto-generation
+		Id:           fileID,
 		BucketId:     command.BucketID,
 		Name:         command.FileName,
 		OriginalName: command.FileName,
@@ -91,6 +103,7 @@ func (h *UploadFileRequestHandler) Handle(ctx context.Context, command *UploadFi
 		Size:         fileSize,
 		MimeType:     command.ContentType,
 		Checksum:     checksum,
+		SecuredUrl:   securedURL,
 		Version:      1,
 		AuthRule: entities.AuthRule{
 			Type:    bucket.AuthRule.Type,
