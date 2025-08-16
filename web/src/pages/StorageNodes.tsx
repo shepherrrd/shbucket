@@ -58,6 +58,17 @@ export default function StorageNodes() {
     },
   });
 
+  const checkAllHealthMutation = useMutation({
+    mutationFn: () => apiClient.checkAllNodesHealth(),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['nodes'] });
+      toast.success('All health checks completed!');
+    },
+    onError: (error: any) => {
+      toast.error(error.message || 'Health check failed');
+    },
+  });
+
   const nodes = nodesData?.nodes || [];
 
   const handleCreateNode = (e: React.FormEvent) => {
@@ -140,10 +151,11 @@ export default function StorageNodes() {
             </div>
             <div className="flex space-x-3">
               <button
-                onClick={() => apiClient.checkAllNodesHealth()}
-                className="inline-flex items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors"
+                onClick={() => checkAllHealthMutation.mutate()}
+                disabled={checkAllHealthMutation.isPending}
+                className="inline-flex items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors disabled:opacity-50"
               >
-                Check All Health
+                {checkAllHealthMutation.isPending ? 'Checking...' : 'Check All Health'}
               </button>
               <button
                 onClick={() => setShowCreateModal(true)}

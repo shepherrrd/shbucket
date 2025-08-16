@@ -350,7 +350,7 @@ export default function BucketView() {
                       className="block w-full px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white text-center font-medium rounded-lg transition-colors"
                     >
                       Download
-                    </a>
+                    </button>
                   )}
                   <button
                     onClick={() => setShowSignedURLDialog(true)}

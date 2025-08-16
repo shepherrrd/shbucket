@@ -219,12 +219,16 @@ func (ctrl *NodeController) HealthCheck(c *fiber.Ctx) error {
 	now := time.Now()
 	storageNode.IsHealthy = isHealthy
 	storageNode.LastPing = &now
+	storageNode.IsActive = true
 	
 	if err := ctrl.dbContext.SaveChanges(); err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
 			"error": "Failed to update node health status",
 		})
+	}else{
+		fmt.Sprintf("Healthy node %s",storageNode.IsHealthy)
 	}
+
 	
 	response := &models.NodeHealthCheckResponse{
 		NodeID:       nodeID,
@@ -265,20 +269,21 @@ func (ctrl *NodeController) CheckAllNodesHealth(c *fiber.Ctx) error {
 	healthResults := make([]models.NodeHealthCheckResponse, 0, len(allNodes))
 	healthyCount := 0
 	
-	for _, node := range allNodes {
-		isHealthy, responseTime, errorMsg := ctrl.pingNode(&node)
+	for i := range allNodes {
+		isHealthy, responseTime, errorMsg := ctrl.pingNode(&allNodes[i])
 		
-		// Update node health status in database
+		// Update node health status directly in the original slice
 		now := time.Now()
-		node.IsHealthy = isHealthy
-		node.LastPing = &now
+		allNodes[i].IsHealthy = isHealthy
+		allNodes[i].LastPing = &now
+		allNodes[i].IsActive = true
 		
 		if isHealthy {
 			healthyCount++
 		}
 		
 		result := models.NodeHealthCheckResponse{
-			NodeID:       node.Id,
+			NodeID:       allNodes[i].Id,
 			IsHealthy:    isHealthy,
 			ResponseTime: responseTime,
 			Success:      isHealthy,
@@ -292,6 +297,9 @@ func (ctrl *NodeController) CheckAllNodesHealth(c *fiber.Ctx) error {
 		}
 		healthResults = append(healthResults, result)
 	}
+	
+	// Bulk update all nodes at once using UpdateRange
+	ctrl.dbContext.StorageNodes.UpdateRange(allNodes)
 	
 	if err := ctrl.dbContext.SaveChanges(); err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
