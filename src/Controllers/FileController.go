@@ -759,8 +759,8 @@ func (ctrl *FileController) InternalUpload(c *fiber.Ctx) error {
 		})
 	}
 
-	// Save file to local storage using node's configured path
-	filePath := fmt.Sprintf("%s/%s_%s", storageDir, fileID, filename)
+	// Save file to local storage using node's configured path - just use fileID
+	filePath := fmt.Sprintf("%s/%s", storageDir, fileID)
 	if err := c.SaveFile(file, filePath); err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
 			"error": "Failed to save file",

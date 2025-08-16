@@ -124,6 +124,9 @@ func (h *DeleteFileRequestHandler) deleteFromNode(filePath string) error {
 		return fmt.Errorf("storage node not found: %w", err)
 	}
 	
+	// Files are now stored using just the fileID on nodes
+	actualFileName := nodeFileID
+	
 	// Create DELETE request to the node's internal deletion endpoint
 	req, err := http.NewRequest("DELETE", 
 		fmt.Sprintf("%s/api/v1/internal/delete", storageNode.URL), 
@@ -135,7 +138,7 @@ func (h *DeleteFileRequestHandler) deleteFromNode(filePath string) error {
 	// Add query parameters for the file to delete
 	q := req.URL.Query()
 	q.Add("bucket_name", bucketName)
-	q.Add("file_name", nodeFileID)
+	q.Add("file_name", actualFileName)
 	req.URL.RawQuery = q.Encode()
 	
 	// Add authentication header using the node's auth key
