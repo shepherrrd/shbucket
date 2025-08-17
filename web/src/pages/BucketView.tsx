@@ -13,6 +13,7 @@ import {
   FolderIcon,
   InformationCircleIcon,
   LinkIcon,
+  ClipboardDocumentIcon,
 } from '@heroicons/react/24/outline';
 import SignedURLDialog from '../components/SignedURLDialog';
 
@@ -315,7 +316,23 @@ export default function BucketView() {
                 {selectedFile.secured_url && (
                   <div>
                     <label className="block text-sm font-medium text-dark-300 mb-1">Secured URL</label>
-                    <p className="text-xs text-primary-400 break-all">Available</p>
+                    <div className="flex items-center space-x-2">
+                      <p className="text-xs text-primary-400 break-all flex-1 font-mono">{selectedFile.secured_url}</p>
+                      <button
+                        onClick={async () => {
+                          try {
+                            await navigator.clipboard.writeText(selectedFile.secured_url!);
+                            toast.success('Secured URL copied to clipboard!');
+                          } catch (error) {
+                            toast.error('Failed to copy URL');
+                          }
+                        }}
+                        className="p-1 text-dark-400 hover:text-primary-400 transition-colors"
+                        title="Copy Secured URL"
+                      >
+                        <ClipboardDocumentIcon className="h-4 w-4" />
+                      </button>
+                    </div>
                   </div>
                 )}
 
@@ -350,6 +367,22 @@ export default function BucketView() {
                       className="block w-full px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white text-center font-medium rounded-lg transition-colors"
                     >
                       Download
+                    </button>
+                  )}
+                  {selectedFile.secured_url && (
+                    <button
+                      onClick={async () => {
+                        try {
+                          await navigator.clipboard.writeText(selectedFile.secured_url!);
+                          toast.success('Secured URL copied to clipboard!');
+                        } catch (error) {
+                          toast.error('Failed to copy URL');
+                        }
+                      }}
+                      className="block w-full px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-center font-medium rounded-lg transition-colors flex items-center justify-center"
+                    >
+                      <ClipboardDocumentIcon className="h-4 w-4 mr-2" />
+                      Copy Secured URL
                     </button>
                   )}
                   <button
