@@ -222,6 +222,8 @@ func (ctrl *FileController) GetFile(c *fiber.Ctx) error {
 //	@Produce		application/octet-stream
 //	@Produce		image/jpeg
 //	@Produce		image/png
+//	@Security		Bearer
+//	@Security		ApiKeyAuth
 //	@Param			bucketId	path		string	true	"Bucket ID"
 //	@Param			fileId		path		string	true	"File ID"
 //	@Param			signature	query		string	false	"Signed URL signature for temporary access"

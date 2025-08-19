@@ -105,6 +105,7 @@ func (ctrl *UserController) Register(c *fiber.Ctx) error {
 //	@Accept			json
 //	@Produce		json
 //	@Security		Bearer
+//	@Security		ApiKeyAuth
 //	@Success		200	{object}	user.LogoutResponse	"Logout successful"
 //	@Failure		400	{object}	map[string]string	"Bad request"
 //	@Failure		401	{object}	map[string]string	"Unauthorized"
@@ -139,6 +140,7 @@ func (ctrl *UserController) Logout(c *fiber.Ctx) error {
 //	@Accept			json
 //	@Produce		json
 //	@Security		Bearer
+//	@Security		ApiKeyAuth
 //	@Param			request	body		user.ChangePasswordCommand	true	"Password change details"
 //	@Success		200	{object}	user.ChangePasswordResponse	"Password changed successfully"
 //	@Failure		400	{object}	map[string]string			"Bad request"
@@ -186,6 +188,7 @@ func (ctrl *UserController) ChangePassword(c *fiber.Ctx) error {
 //	@Accept			json
 //	@Produce		json
 //	@Security		Bearer
+//	@Security		ApiKeyAuth
 //	@Param			id	path		string					true	"User ID"
 //	@Success		200	{object}	user.GetUserResponse	"User information"
 //	@Failure		400	{object}	map[string]string		"Invalid user ID"
@@ -222,6 +225,7 @@ func (ctrl *UserController) GetUser(c *fiber.Ctx) error {
 //	@Accept			json
 //	@Produce		json
 //	@Security		Bearer
+//	@Security		ApiKeyAuth
 //	@Param			page			query		int			false	"Page number (default: 1)"
 //	@Param			limit			query		int			false	"Items per page (default: 10)"
 //	@Param			include_buckets	query		bool		false	"Include user buckets"

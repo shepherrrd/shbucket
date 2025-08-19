@@ -4,10 +4,10 @@ definitions:
     properties:
       api_key:
         $ref: '#/definitions/models.APIKeyResponse'
-      message:
-        type: string
-      plain_key:
+      key:
         description: Only returned on creation
+        type: string
+      message:
         type: string
       success:
         type: boolean
@@ -320,6 +320,8 @@ definitions:
       original_name:
         type: string
       path:
+        type: string
+      secured_url:
         type: string
       size:
         type: integer
@@ -750,6 +752,7 @@ paths:
             type: object
       security:
       - Bearer: []
+      - ApiKeyAuth: []
       summary: List API keys
       tags:
       - api-keys
@@ -785,6 +788,7 @@ paths:
             type: object
       security:
       - Bearer: []
+      - ApiKeyAuth: []
       summary: Create API key
       tags:
       - api-keys
@@ -820,6 +824,7 @@ paths:
             type: object
       security:
       - Bearer: []
+      - ApiKeyAuth: []
       summary: Delete API key
       tags:
       - api-keys
@@ -856,6 +861,7 @@ paths:
             type: object
       security:
       - Bearer: []
+      - ApiKeyAuth: []
       summary: Change password
       tags:
       - auth
@@ -914,6 +920,7 @@ paths:
             type: object
       security:
       - Bearer: []
+      - ApiKeyAuth: []
       summary: User logout
       tags:
       - auth
@@ -1436,7 +1443,151 @@ paths:
             additionalProperties:
               type: string
             type: object
+      security:
+      - Bearer: []
+      - ApiKeyAuth: []
       summary: Serve file content
+      tags:
+      - files
+  /internal/delete:
+    delete:
+      consumes:
+      - application/json
+      description: Deletes files from this storage node
+      parameters:
+      - description: Bucket name
+        in: query
+        name: bucket_name
+        required: true
+        type: string
+      - description: File name to delete
+        in: query
+        name: file_name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Delete successful
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - Bearer: []
+      summary: Internal delete for distributed storage
+      tags:
+      - files
+  /internal/file:
+    get:
+      consumes:
+      - application/json
+      description: Serves files directly from this storage node
+      parameters:
+      - description: Bucket ID
+        in: query
+        name: bucket_id
+        required: true
+        type: string
+      - description: File ID
+        in: query
+        name: file_id
+        required: true
+        type: string
+      - description: Filename
+        in: query
+        name: filename
+        required: true
+        type: string
+      produces:
+      - application/octet-stream
+      responses:
+        "200":
+          description: File content
+        "400":
+          description: Bad request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: File not found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - Bearer: []
+      summary: Internal file serving for distributed storage
+      tags:
+      - files
+  /internal/upload:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Receives files from master node for storage on this node
+      parameters:
+      - description: File to upload
+        in: formData
+        name: file
+        required: true
+        type: file
+      - description: Bucket ID
+        in: formData
+        name: bucket_id
+        required: true
+        type: string
+      - description: File ID
+        in: formData
+        name: file_id
+        required: true
+        type: string
+      - description: Original filename
+        in: formData
+        name: filename
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Upload successful
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - Bearer: []
+      summary: Internal upload for distributed storage
       tags:
       - files
   /node/auth-key:
@@ -1506,6 +1657,7 @@ paths:
             type: object
       security:
       - Bearer: []
+      - ApiKeyAuth: []
       summary: Node ping
       tags:
       - nodes
@@ -1581,6 +1733,7 @@ paths:
             type: object
       security:
       - Bearer: []
+      - ApiKeyAuth: []
       summary: List storage nodes
       tags:
       - nodes
@@ -1616,6 +1769,7 @@ paths:
             type: object
       security:
       - Bearer: []
+      - ApiKeyAuth: []
       summary: Register storage node
       tags:
       - nodes
@@ -1658,6 +1812,7 @@ paths:
             type: object
       security:
       - Bearer: []
+      - ApiKeyAuth: []
       summary: Delete storage node
       tags:
       - nodes
@@ -1699,7 +1854,33 @@ paths:
             type: object
       security:
       - Bearer: []
+      - ApiKeyAuth: []
       summary: Check node health
+      tags:
+      - nodes
+  /nodes/health:
+    get:
+      consumes:
+      - application/json
+      description: Check the health status of all storage nodes
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Health check results for all nodes
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - Bearer: []
+      - ApiKeyAuth: []
+      summary: Check all nodes health
       tags:
       - nodes
   /nodes/install:
@@ -1735,6 +1916,7 @@ paths:
             type: object
       security:
       - Bearer: []
+      - ApiKeyAuth: []
       summary: Install storage node
       tags:
       - nodes
@@ -1884,6 +2066,7 @@ paths:
             type: object
       security:
       - Bearer: []
+      - ApiKeyAuth: []
       summary: List users
       tags:
       - users
@@ -1925,6 +2108,7 @@ paths:
             type: object
       security:
       - Bearer: []
+      - ApiKeyAuth: []
       summary: Get user by ID
       tags:
       - users

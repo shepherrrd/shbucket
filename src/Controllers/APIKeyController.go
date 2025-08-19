@@ -36,6 +36,7 @@ func NewAPIKeyController(mediator *mediator.Mediator, validator *validator.Valid
 //	@Accept			json
 //	@Produce		json
 //	@Security		Bearer
+//	@Security		ApiKeyAuth
 //	@Param			request	body		object							true	"API key creation request"
 //	@Success		201		{object}	apikey.CreateAPIKeyResponse		"API key created successfully"
 //	@Failure		400		{object}	map[string]string				"Bad request"
@@ -98,6 +99,7 @@ func (ctrl *APIKeyController) CreateAPIKey(c *fiber.Ctx) error {
 //	@Accept			json
 //	@Produce		json
 //	@Security		Bearer
+//	@Security		ApiKeyAuth
 //	@Param			page	query		int						false	"Page number (default: 1)"
 //	@Param			limit	query		int						false	"Items per page (default: 20)"
 //	@Success		200	{object}	apikey.ListAPIKeysResponse	"List of API keys"
@@ -138,6 +140,7 @@ func (ctrl *APIKeyController) ListAPIKeys(c *fiber.Ctx) error {
 //	@Accept			json
 //	@Produce		json
 //	@Security		Bearer
+//	@Security		ApiKeyAuth
 //	@Param			id	path		string						true	"API Key ID"
 //	@Success		200	{object}	apikey.DeleteAPIKeyResponse	"API key deleted successfully"
 //	@Failure		400	{object}	map[string]string			"Bad request"

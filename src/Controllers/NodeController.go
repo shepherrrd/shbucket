@@ -41,6 +41,7 @@ func NewNodeController(mediator *mediator.Mediator, validator *validator.Validat
 //	@Accept			json
 //	@Produce		json
 //	@Security		Bearer
+//	@Security		ApiKeyAuth
 //	@Param			request	body		models.RegisterNodeRequest		true	"Node registration details"
 //	@Success		201		{object}	node.RegisterNodeResponse		"Node registered successfully"
 //	@Failure		400		{object}	map[string]string				"Bad request"
@@ -88,6 +89,7 @@ func (ctrl *NodeController) RegisterNode(c *fiber.Ctx) error {
 //	@Accept			json
 //	@Produce		json
 //	@Security		Bearer
+//	@Security		ApiKeyAuth
 //	@Param			page	query		int		false	"Page number"		default(1)
 //	@Param			limit	query		int		false	"Items per page"	default(10)
 //	@Param			active	query		bool	false	"Show only active nodes"	default(false)
@@ -123,6 +125,7 @@ func (ctrl *NodeController) ListNodes(c *fiber.Ctx) error {
 //	@Accept			json
 //	@Produce		json
 //	@Security		Bearer
+//	@Security		ApiKeyAuth
 //	@Param			request	body		models.NodeInstallationRequest	true	"Node installation details"
 //	@Success		201		{object}	models.NodeInstallationResponse	"Node installed successfully"
 //	@Failure		400		{object}	map[string]string				"Bad request"
@@ -189,6 +192,7 @@ func (ctrl *NodeController) InstallNode(c *fiber.Ctx) error {
 //	@Accept			json
 //	@Produce		json
 //	@Security		Bearer
+//	@Security		ApiKeyAuth
 //	@Param			id	path		string	true	"Node ID"
 //	@Success		200	{object}	models.NodeHealthCheckResponse	"Node health status"
 //	@Failure		400	{object}	map[string]string				"Bad request"
@@ -253,6 +257,7 @@ func (ctrl *NodeController) HealthCheck(c *fiber.Ctx) error {
 //	@Accept			json
 //	@Produce		json
 //	@Security		Bearer
+//	@Security		ApiKeyAuth
 //	@Success		200	{object}	map[string]interface{}	"Health check results for all nodes"
 //	@Failure		401	{object}	map[string]string		"Unauthorized"
 //	@Router			/nodes/health [get]
@@ -322,6 +327,7 @@ func (ctrl *NodeController) CheckAllNodesHealth(c *fiber.Ctx) error {
 //	@Accept			json
 //	@Produce		json
 //	@Security		Bearer
+//	@Security		ApiKeyAuth
 //	@Param			id	path		string	true	"Node ID"
 //	@Success		200	{object}	map[string]interface{}	"Node deleted successfully"
 //	@Failure		400	{object}	map[string]string		"Bad request"
@@ -446,6 +452,7 @@ func (ctrl *NodeController) GetAuthKey(c *fiber.Ctx) error {
 //	@Accept			json
 //	@Produce		json
 //	@Security		Bearer
+//	@Security		ApiKeyAuth
 //	@Param			url	query		string	true	"Node URL"
 //	@Success		200	{object}	map[string]interface{}	"Ping successful"
 //	@Failure		400	{object}	map[string]string		"Bad request"
